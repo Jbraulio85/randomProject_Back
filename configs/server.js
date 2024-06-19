@@ -8,6 +8,7 @@ import { apiLimiter } from "../src/middlewares/validar-cant-peticiones.js";
 import { dbConnection } from "./mongo.js";
 import Project from "../src/projects/project.model.js";
 import projectRoutes from "../src/projects/project.routes.js";
+import studentRoutes from '../src/student/student.routes.js'
 
 export class ExpressServer {
   constructor() {
@@ -35,6 +36,7 @@ export class ExpressServer {
 
   routes() {
     this.app.use(this.projectPath, projectRoutes);
+    this.app.use(this.projectPath, studentRoutes)
   }
 
   listen() {
