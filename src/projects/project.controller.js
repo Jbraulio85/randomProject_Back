@@ -1,5 +1,6 @@
 import projectModel from "./project.model.js"
 import Student from '../student/student.model.js'
+import { sendMail } from "../utils/sendmail.js";
 
 export const createProject = async (req, res) => {
     const {name, repository} = req.body;
@@ -30,19 +31,22 @@ export const asignProject = async (req, res)=>{
 
             studentExist.projectAssigned = randomProject._id
             studentExist.assigned = true
-            await studentExist.save()
-
+            
             //Agregar lo del Emailer
-
-            res.status(200).json({
-                response: "Proyecto asignado exitosamente",
-                project: randomProject
+            sendMail(req, studentExist, randomProject, res, async (email)=>{
+                
+                await studentExist.save()
+                return res.send(
+                    {
+                        response: `Proyecto asignado exitosamente, revisa tu correo ${email}`
+                    }
+                )
             })
         }else{
             return res.status(404).json(
                 {
                     response: "Número de carnet no encontrado o ya se le ha asignado proyecto",
-                    error: 'Not Found Student'
+                    error: 'Not Found Student / Already assigned project'
                 }
             )
         }
