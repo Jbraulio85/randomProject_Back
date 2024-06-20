@@ -31,7 +31,7 @@ export const createStudent = async (req, res) => {
             )
             await student.save()
             res.status(200).json({
-                response: "Projecto agregado exitosamente",
+                response: "Estudiante agregado exitosamente",
                 project: student
             })
         }
