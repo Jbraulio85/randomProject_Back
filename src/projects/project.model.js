@@ -4,8 +4,11 @@ const ProjectSchema = mongoose.Schema({
     name:{
         type: String
     },
-    repository:{
-        type:String
+    repositoryBack:{
+        type: String
+    },
+    repositoryFront: {
+        type: String
     }
 },{
     versionKey: false

@@ -3,9 +3,9 @@ import Student from '../student/student.model.js'
 import { sendMail } from "../utils/sendmail.js";
 
 export const createProject = async (req, res) => {
-    const {name, repository} = req.body;
+    const {name, repositoryBack, repositoryFront} = req.body;
 
-    const project = new projectModel({ name, repository})
+    const project = new projectModel({ name, repositoryBack, repositoryFront})
 
     await project.save()
 

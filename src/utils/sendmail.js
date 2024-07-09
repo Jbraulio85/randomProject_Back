@@ -33,8 +33,8 @@ sendMail(req, user, project, res, callback) {
         to: user.email,
         bcc: 'proyectosdevgt@gmail.com',
         subject: 'Asignación de proyecto',
-        text: `Hola ${user.name}, tu proyecto es ${project.name} y el repositorio es ${project.repository}.`,
-        html: `<p>Hola ${user.name},</p><p>tu proyecto es ${project.name} y</strong> el repositorio es ${project.repository}.</p>`
+        text: `Hola ${user.name}, tu proyecto es ${project.name}, el repositorio del frontend es ${project.repositoryFront} y del backend ${project.repositoryBack} `,
+        html: `<p>Hola ${user.name},</p><p>tu proyecto es <strong>${project.name}</strong>, el repositorio del frontend es ${project.repositoryFront} y el del backend ${project.repositoryBack}</p>`
     };
 
     mail_rover(function (emailTransporter) {
