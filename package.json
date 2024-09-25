@@ -9,7 +9,7 @@
     "dev": "nodemon index"
   },
   "keywords": [],
-  "author": "Braulio Echeverria",
+  "author": "Shucode",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2",
@@ -27,6 +27,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
     "nodemailer": "^6.9.14",
+    "random_proyect": "file:",
     "vercel": "^32.3.0"
   },
   "devDependencies": {
