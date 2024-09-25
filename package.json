@@ -1,6 +1,9 @@
 {
   "name": "random_proyect",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "description": "Asignación aleatoria de proyectos semana 4",
   "main": "index.js",
   "scripts": {

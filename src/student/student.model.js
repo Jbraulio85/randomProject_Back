@@ -24,7 +24,7 @@ const studentSchema = Schema({
     },
     section: {
         type: String,
-        enum: ['IN6AM', 'IN6AV', 'IN6BM', 'IN6BV'],
+        enum: ['IN5AM', 'IN5AV', 'IN5BM', 'IN5BV'],
         required: true
     },
     assigned: {

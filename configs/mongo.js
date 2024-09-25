@@ -24,8 +24,8 @@ export const dbConnection = async () => {
             console.log('MongoDB | disconnected')
         })
 
-        await mongoose.connect(process.env.URI_MONGO, {
-            serverSelectionTimeoutMS: 5000,
+        await mongoose.connect('mongodb+srv://jnoj:123@clusterrandomproject.an0pwjr.mongodb.net/codeFix?retryWrites=true&w=majority&appName=ClusterRandomProject', {
+            serverSelectionTimeoutMS: 10000,
             maxPoolSize: 50
         });
     }catch(e){
