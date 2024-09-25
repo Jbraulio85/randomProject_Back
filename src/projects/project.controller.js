@@ -3,7 +3,8 @@ import Student from '../student/student.model.js'
 import { sendMail } from "../utils/sendmail.js";
 
 export const createProject = async (req, res) => {
-    const {name, repository} = req.body;
+    try{
+        const {name, repository} = req.body;
 
     const project = new projectModel({ name, repository})
 
@@ -13,6 +14,12 @@ export const createProject = async (req, res) => {
         response: "Projecto agregado exitosamente",
         project
     })
+    }catch(e){
+        return res.status(500).json({
+            response: "Error al crear el proyecto"
+        })
+    }
+    
 }
 
 export const asignProject = async (req, res)=>{
