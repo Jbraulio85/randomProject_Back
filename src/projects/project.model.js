@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 
-const ProjectSchema = mongoose.Schema({
-    name:{
-        type: String
+const ProjectSchema = mongoose.Schema(
+    {
+        name:{
+            type: String
+        },
+        repository:{
+            type: String
+        },
     },
-    repository:{
-        type:String
+    {
+        versionKey: false
     }
-},{
-    versionKey: false
-})
+)
 
 export default mongoose.model('Projects', ProjectSchema); 

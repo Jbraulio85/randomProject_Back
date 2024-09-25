@@ -6,7 +6,7 @@ export const createProject = async (req, res) => {
     try{
         const {name, repository} = req.body;
 
-    const project = new projectModel({ name, repository})
+    const project = new projectModel({ name, repositoryBack, repositoryFront})
 
     await project.save()
 
