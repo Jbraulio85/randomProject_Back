@@ -16,8 +16,10 @@ export const createStudent = async (req, res) => {
                 )
                 await newStudent.save()
             }
-            res.status(200).json({
-                response: "Estudiante guardado correctamente"
+            return res.status(200).json({
+                success: true,
+                message: "Estudiantes guardados correctamente",
+                data: null
             })
         } else {
             const student = new Student(
@@ -30,18 +32,18 @@ export const createStudent = async (req, res) => {
                 }
             )
             await student.save()
-            res.status(200).json({
-                response: "Estudiante agregado exitosamente",
-                project: student
+            return res.status(200).json({
+                success: true,
+                message: "Estudiante agregado exitosamente",
+                data: student
             })
         }
     } catch (err) {
-        return res.status(500).json(
-            {
-                response: "Error al agregar datos",
-                error: err
-            }
-        )
+        return res.status(500).json({
+            success: false,
+            message: "Error al agregar datos",
+            error: err.message
+        })
     }
 }
 
