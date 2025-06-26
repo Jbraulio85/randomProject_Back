@@ -1,7 +1,17 @@
 import nodemailer from 'nodemailer';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const accountTransport = require('../account_transport.json');
+import dotenv from 'dotenv';
+dotenv.config();
+
+const accountTransport = {
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    user: process.env.GMAIL_USER,
+    clientId: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    refreshToken: process.env.GMAIL_REFRESH_TOKEN
+  }
+};
 
 export function sendMail(req, user, project, res, callback) {
     const mailOptions = {
