@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createStudentValidator } from "../../helpers/student-middlewares.js";
+import { createStudentValidator } from "../../middlewares/student-middlewares.js";
 import { createStudent } from "./student.controller.js";
 
 const router = Router();
@@ -67,11 +67,13 @@ const router = Router();
  *       500:
  *         description: Error al crear el estudiante
  */
+
+// Usar el middleware dinámico (no como array)
 router.post(
     "/createStudent",
     createStudentValidator,
     createStudent
-)
+);
 
 export default router;
 

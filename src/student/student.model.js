@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose"
 
 const studentSchema = new Schema({
     studentId: {
-        type: Number,
+        type: String,
         unique: true,
         required: [true, 'El número de carnet es obligatorio'],
         minLength: [7, 'El número de carnet debe tener 7 dígitos'],

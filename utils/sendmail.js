@@ -1,21 +1,24 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { getAccessToken } from './gmailOAuth2.js';
 dotenv.config();
 
-const accountTransport = {
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.GMAIL_USER,
-    clientId: process.env.GMAIL_CLIENT_ID,
-    clientSecret: process.env.GMAIL_CLIENT_SECRET,
-    refreshToken: process.env.GMAIL_REFRESH_TOKEN
-  }
-};
+export async function sendMail(user, project) {
+    const accessToken = await getAccessToken();
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            type: 'OAuth2',
+            user: process.env.GMAIL_USER,
+            clientId: process.env.GMAIL_CLIENT_ID,
+            clientSecret: process.env.GMAIL_CLIENT_SECRET,
+            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+            accessToken: accessToken
+        }
+    });
 
-export function sendMail(req, user, project, res, callback) {
     const mailOptions = {
-        from: accountTransport.auth.user,
+        from: process.env.GMAIL_USER,
         to: user.email,
         bcc: 'braulioecheverria@kinal.org.gt',
         subject: 'Asignación de Proyecto Académico',
@@ -24,7 +27,7 @@ export function sendMail(req, user, project, res, callback) {
         <div style="font-family: 'Segoe UI', Arial, sans-serif; background: #f6f8fa; padding: 32px 0;">
           <div style="max-width: 520px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px 36px;">
             <div style="text-align: center; margin-bottom: 24px;">
-              <img src='https://i.ibb.co/84tQx6H5/Escudo-Transparente.png' alt='Proyecto' style='width:64px; margin-bottom: 8px;'>
+              <img src='https://i.ibb.co/84tQx6H5/Escudo-Transparente.png' alt='Proyecto' style='width:10px; height:auto; margin-bottom: 8px;'>
               <h2 style="color: #2d3748; margin: 0 0 8px 0;">Asignación de Proyecto Académico</h2>
             </div>
             <p style="color: #222; font-size: 1.08em;">Estimado/a <strong>${user.name}</strong>,</p>
@@ -46,18 +49,12 @@ export function sendMail(req, user, project, res, callback) {
         `
     };
 
-    const transporter = nodemailer.createTransport(accountTransport);
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.error('Error al enviar el correo:', error);
-            return res.status(500).json({
-                response: "Error al enviar el correo, proyecto no asignado.",
-                error: "Failed to send email / Look the network connection"
-            });
-        } else {
-            console.log('Correo enviado correctamente:', info.response);
-            return callback(user.email);
-        }
-    });
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Correo enviado correctamente:', info.response);
+        return user.email;
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        throw error;
+    }
 }

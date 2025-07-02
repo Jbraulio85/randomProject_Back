@@ -11,9 +11,18 @@ import studentRoutes from '../src/student/student.routes.js'
 import { swaggerDocs, swaggerUi } from "./documentation.js";
 
 const middlewares = (app) => {
-  app.use(cors());
+  app.use(cors({
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+        allowedHeaders: ["Content-Type", "Authorization"],
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+      }));
   app.use(express.json());
-  app.use(helmet());
+  app.use(helmet({
+        crossOriginResourcePolicy: false,
+        crossOriginEmbedderPolicy: false,
+      }));
   app.use(morgan("dev"));
   app.use(apiLimiter);
   app.use("/randomProject/v2/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
